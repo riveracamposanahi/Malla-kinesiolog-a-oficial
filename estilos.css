@@ -1,1 +1,227 @@
+/* Variables de Color basadas en la paleta Burdeo y Beige */
+:root {
+    --color-principal: #800020; /* Burdeo Oscuro */
+    --color-secundario: #D9C5A4; /* Beige/Arena */
+    --color-fondo: #FAFAFA; /* Blanco Roto */
+    --color-aprobado: #28a745; /* Verde para Aprobado */
+    --color-bloqueado: #343a40; /* Gris Oscuro/Casi Negro */
+    --color-texto-claro: #FFFFFF;
+    --color-sombra: rgba(0, 0, 0, 0.1);
+}
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-bloqueado);
+    line-height: 1.6;
+}
+
+/* --- Cabecera --- */
+.header {
+    background-color: var(--color-principal);
+    color: var(--color-texto-claro);
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--color-sombra);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* --- Contenedor Principal de la Malla (Grid) --- */
+.malla-container {
+    display: grid;
+    /* 1 columna por defecto, y luego se adapta a pantallas más grandes */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- Estilos del Semestre (Columna) --- */
+.semestre {
+    background-color: var(--color-secundario);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px var(--color-sombra);
+}
+
+.semestre h3 {
+    text-align: center;
+    color: var(--color-principal);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--color-principal);
+    padding-bottom: 8px;
+    font-size: 1.3em;
+}
+
+/* --- Estilos del Ramo (Módulo) --- */
+.ramo {
+    background-color: var(--color-texto-claro);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    font-weight: 500;
+    box-shadow: 0 1px 3px var(--color-sombra);
+    user-select: none; /* Evita selección de texto al hacer clic */
+}
+
+.ramo:hover:not(.aprobado):not(.bloqueado) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px var(--color-sombra);
+    background-color: #f0f0f0;
+}
+
+/* Icono de estado */
+.ramo-status {
+    color: var(--color-bloqueado);
+    font-size: 1.2em;
+    transition: color 0.2s;
+}
+
+/* --- Estado APROBADO --- */
+.ramo.aprobado {
+    background-color: var(--color-aprobado);
+    color: var(--color-texto-claro);
+    text-decoration: line-through;
+    cursor: default;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+}
+
+.ramo.aprobado:hover {
+    transform: none; /* Desactiva hover en aprobado */
+}
+
+.ramo.aprobado .ramo-status {
+    color: var(--color-texto-claro);
+}
+
+/* --- Estado BLOQUEADO --- */
+/* Estilo para los ramos que tienen prerrequisitos no cumplidos */
+.ramo.bloqueado {
+    background-color: #e9ecef; /* Gris Claro */
+    color: #6c757d; /* Gris Suave */
+    cursor: not-allowed;
+    border: 1px dashed var(--color-bloqueado);
+}
+
+.ramo.bloqueado:hover {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px var(--color-sombra);
+}
+
+.ramo.bloqueado .ramo-status {
+    color: #6c757d; /* Icono gris suave */
+}
+
+/* --- Mensaje de Prerrequisitos (Pop-up) --- */
+.prereq-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.prereq-message.hidden {
+    display: none;
+}
+
+.message-content {
+    background-color: var(--color-texto-claro);
+    color: var(--color-bloqueado);
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.message-content h2 {
+    color: var(--color-principal);
+    margin-bottom: 10px;
+}
+
+.message-content .fa-exclamation-triangle {
+    font-size: 2.5em;
+    color: #ffc107; /* Amarillo de advertencia */
+    margin-bottom: 15px;
+}
+
+#prereq-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 15px 0 25px 0;
+    text-align: left;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+#prereq-list li {
+    background-color: #f8f9fa;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border-left: 3px solid var(--color-principal);
+    font-weight: 500;
+}
+
+.message-content button {
+    background-color: var(--color-principal);
+    color: var(--color-texto-claro);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+.message-content button:hover {
+    background-color: #5c0017; /* Burdeo más oscuro */
+}
+
+/* --- Media Queries (Diseño Responsivo) --- */
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    .malla-container {
+        padding: 10px;
+        /* Vuelve a una columna en móviles si lo deseas, aunque auto-fit ya funciona bien */
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .ramo {
+        font-size: 0.9em;
+    }
+}
