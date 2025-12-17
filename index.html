@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular - Kinesiología</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
 
+    <header class="header">
+        <h1>Malla Curricular Interactivo de Kinesiología</h1>
+        <p>Haz clic en un ramo para marcarlo como aprobado.</p>
+    </header>
+
+    <div class="malla-container" id="mallaContainer">
+        </div>
+
+    <div id="prereq-message" class="prereq-message hidden">
+        <div class="message-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Ramos Requeridos Pendientes</h2>
+            <p>Para cursar este ramo, primero debes aprobar los siguientes:</p>
+            <ul id="prereq-list">
+                </ul>
+            <button onclick="document.getElementById('prereq-message').classList.add('hidden')">Entendido</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
